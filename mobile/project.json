@@ -1,0 +1,28 @@
+{
+    "project_type": "javascript",
+
+    "debugMode" : 1,
+    "showFPS" : true,
+    "frameRate" : 60,
+    "noCache" : false,
+    "id" : "gameCanvas",
+    "renderMode" : 0,
+    "engineDir":"frameworks/cocos2d-html5",
+
+    "modules" : ["cocos2d"],
+
+    "jsList" : [
+        "core/jsb_ext_action.js",
+        "core/jsb_ext_socket.js",
+        "core/jsb_ext_newui.js",
+        "core/jsb_ext_laucher.js",
+        "core/FacebookPlugin.js",
+        "core/SystemPlugin.js",
+        "core/GlobalEvent.js",
+        "core/LoadingScene.js"
+    ],
+
+    "acsUpdate" : "",
+    "forceUpdate" : "",
+    "autoRetryUpdate" : true
+}
