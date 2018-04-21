@@ -1,0 +1,20 @@
+{
+	"texture" : [
+		{"img": "res/Texture/nohu_win_bantrung/nohu_anhsang.png"},
+		{"img": "res/Texture/nohu_win_bantrung/nohu_background.png"},
+		{"img": "res/Texture/nohu_win_bantrung/nohu_background2.png"},
+		{"img": "res/Texture/nohu_win_bantrung/nohu_background3.png"},
+		{"img": "res/Texture/nohu_win_bantrung/particle_texture.png"},
+		{"img": "res/Texture/lv_nohu_xu.png"}
+	],
+	"fonts" : [
+		{
+			"img": "res/Texture/nohu_win_bantrung/font_nohu_rename.png",
+			"fnt": "res/Texture/nohu_win_bantrung/font_nohu_rename.fnt"
+		}
+	],
+	"raw" : [
+		"res/Texture/nohu_win_bantrung/particle_texture.plist",
+		"res/Texture/lv_nohu_xu.plist"
+	]
+}

@@ -2,117 +2,182 @@
  * Created by cocos2d on 11/9/2016.
  */
 
+// var s_loading_tips = s_loading_tips || [
+//         "Nhấn Dừng khi đang quay để xem ngay kết quả.",
+//         "Chọn nhiều dòng để tăng tỷ lệ nổ hũ.",
+//         "Tính năng quay tự động sẽ dừng khi Nổ Hũ.",
+//         "VP có thể dùng để đổi ra xLot.",
+//         "Có thể chơi minigame cùng lúc với game slot.",
+//         "Đăng nhập hàng ngày để nhận vòng quay miễn phí",
+//         "Nhấn Dừng khi đang quay để xem ngay kết quả.",
+//         // "Dễ nổ hũ lắm anh em ơi! Nhoằng cái có ngay vài củ tiêu rồi.",
+//         "Anh em tham gia \"Đập hũ\" LUÔN VÀ NGAY nhá!"
+//
+//     ];
+
+var LoadingProcessAction = cc.CustomAction.extend({
+    ctor : function (duration, from, to, callback) {
+        this._super();
+        this.callback = callback;
+        this._from = from;
+        this._to = to;
+        this.initWithDuration(duration);
+    },
+
+    onUpdate : function (dt) {
+        if(this.callback){
+            this.callback(this._from + (this._to - this._from) * dt);
+        }
+    }
+});
+
 var LoadingScene = cc.Scene.extend({
     ctor : function () {
         this._super();
-        var label = new ccui.Text("Quyết đẹp trai", "arial", 30);
-        label.x = cc.winSize.width/2;
-        label.y = cc.winSize.height/2;
+        //img loadingScene need preloadin g_resources in main.js
+        var bg = new cc.Sprite("res/Texture/LoadingScene/bgLoading.jpg");
+        bg.setAnchorPoint(cc.p(0,1));
+        this.addChild(bg);
+        this.bg = bg;
+
+        var sceneLayer = new cc.Node();
+        sceneLayer.setContentSize(cc.size(1920, 1080));
+        sceneLayer.setAnchorPoint(cc.p(0, 1));
+        this.addChild(sceneLayer);
+        this.sceneLayer = sceneLayer;
+
+        /*var logo = new cc.Sprite("res/LoadingScene_logo.png");
+        logo.setPosition(1026, 591);
+        sceneLayer.addChild(logo);*/
+
+        /*var loadingBarBg = new cc.Sprite("res/LoadingScene_bar_1.png");
+        loadingBarBg.setPosition(cc.p(sceneLayer.width/2, 342));
+        sceneLayer.addChild(loadingBarBg);*/
+
+        var loadingBar = new cc.ProgressTimer(new cc.Sprite("res/Texture/LoadingScene/slider.png"));
+        loadingBar.setType(cc.ProgressTimer.TYPE_BAR);
+        loadingBar.setBarChangeRate(cc.p(1.0,0.0));
+        loadingBar.setMidpoint(cc.p(0.0, 0.5));
+        loadingBar.setPosition(sceneLayer.width/2, 342);
+        sceneLayer.addChild(loadingBar);
+        this.loadingBar = loadingBar;
+        loadingBar.setPercentage(0.0);
+
+        var label = new ccui.Text("Đang tải...", "arial", 30);
+        label.setPosition(sceneLayer.width/2, 280);
         this.title = label;
-        this.addChild(label);
+        sceneLayer.addChild(label);
+
+        var loadingLabel = new ccui.Text("", "arial", 20);
+        loadingLabel.setPosition(loadingBar.getPosition());
+        sceneLayer.addChild(loadingLabel);
+        this.loadingLabel = loadingLabel;
+
+        var thiz = this;
+        var resLoader = new ResourceLoader();
+        resLoader._autoRetry = true;
+        resLoader.onLoadProcess = function (current, target) {
+            thiz.updateProcess(100 * current / target);
+        };
+        resLoader.onLoadSuccess = function () {
+            thiz.updateProcess(100);
+        };
+        resLoader.onLoadFailureWithAutoRetry = function () {
+            thiz.__setStatus("Tải thất bại, vui lòng kiểm tra lại mạng");
+        };
 
         this.gameLaucher = new GameLaucher();
+        this.gameLaucher.loadMainModule = function () {
+            resLoader.addModule(ModuleManager.getInstance().getModule("main"));
+            // resLoader.addModule(ModuleManager.getInstance().getModule("GameTLMN"));
+            resLoader.load();
+        };
+        this.gameLaucher.onLoadResourceFailure = function () {
+            thiz.__setStatus("Tải thất bại, vui lòng kiểm tra lại mạng");
+            setTimeout(function () {
+                thiz.startLoadResources();
+            }, 1000)
+        };
+    },
+
+    onCanvasResize: function () {
+        this.sceneLayer.setPosition(0, cc.winSize.height);
+        var scale = cc.winSize.height / 1080;
+        this.bg.setScale(scale < 1 ? 1 : scale);
+        this.bg.setPosition(0, cc.winSize.height);
+    },
+
+    updateProcess: function (percentage) {
+        this.currentPer = percentage;
+        this._refreshProcess = true;
+    },
+
+    update : function (dt) {
+        var currentPer = this.loadingBar.getPercentage();
+        if(currentPer >= 100){
+            this.unscheduleUpdate();
+            setTimeout(function () {
+                window._cc_finished_Loading();
+            }, 0);
+        }
+        else{
+            if(this._refreshProcess){
+                var nextPer = dt * 100 + currentPer;
+                if(nextPer >= this.currentPer){
+                    nextPer = this.currentPer;
+                    this._refreshProcess = false;
+                }
+                this.__setProcess(nextPer);
+            }
+        }
     },
 
     onEnter : function () {
         this._super();
-        GlobalEvent.getInstance().addListener("onUpdateModule", this.onUpdateModule, this);
-        GlobalEvent.getInstance().addListener("onLoadModule", this.onLoadModule, this);
-        GlobalEvent.getInstance().addListener("onLoadModuleStatus", this.onLoadModuleStatus, this);
-
         //fix
         cc.director.replaceScene = cc.director.replaceScene || function (scene) {
             cc.director.runScene(scene);
         };
-        this.schedule(this.startLoadResources, 0.3);
+
+        this.onCanvasResize();
+        var thiz = this;
+        cc.eventManager.addListener({
+            event: cc.EventListener.CUSTOM,
+            eventName : "canvas-resize",
+            callback : function () {
+                thiz.onCanvasResize();
+            }
+        }, this);
+
+        this.scheduleUpdate();
+        this.startLoadResources();
     },
+
     onExit : function () {
         this._super();
         this.gameLaucher = null;
-        GlobalEvent.getInstance().removeListener(this);
+        this.unscheduleUpdate();
     },
+
     startLoadResources : function () {
-        this.unschedule(this.startLoadResources);
+        if(window.cc_resources_search_path){
+            cc.loader.resPath = window.cc_resources_search_path;
+        }
+        else{
+            cc.loader.resPath = "";
+        }
         this.gameLaucher.start();
     },
 
-    onUpdateModule : function (name, data) {
-        // var current = data["current"];
-        // var target = data["target"];
-        // if(data["module"] === "main"){
-        //     var per = Math.floor(current / target * 50) + 25;
-        // }
-        // else{
-        //     var per = Math.floor(this.moduleIndex / this.moduleReady.length * current / target * 25) + 75;
-        // }
-        // this.title.setString("Đang tải tài nguyên[" + per + "%]");
+    __setProcess : function (per) {
+        this.loadingBar.setPercentage(per);
+        if(per > 100){
+            per = 100;
+        }
+        this.loadingLabel.setString(Math.round(per) + "%");
     },
 
-    onLoadModule : function (name, data) {
-        var current = data["current"];
-        var target = data["target"];
-        if(data["module"] === "main"){
-            var per = Math.floor(current / target * 50) + 25;
-        }
-        else{
-            var _p1 = 25.0 / this.moduleReady.length;
-            var _p2 = (this.moduleIndex-1) *  _p1;
-            var per = Math.floor(current / target / _p1  + _p2 + 75);
-        }
-        this.title.setString("Đang tải tài nguyên[" + per + "%]");
-    },
-
-    onLoadModuleStatus : function (name, data) {
-        var status = data["status"];
-        if(status === ModuleStatus.UpdateFailure){
-            this.title.setString("Cập nhật thất bại");
-        }
-        if(data["module"] === "main"){
-            if(status === ModuleStatus.LoadResourceFinished){
-                this._getAllReadyModule();
-                this._loadReadyModule();
-            }
-        }
-        else{
-            if(status === ModuleStatus.LoadResourceFinished){
-                this._loadReadyModule();
-            }
-        }
-    },
-
-    _getAllReadyModule : function () {
-        var allModule = ModuleManager.getInstance().allModuleName();
-        var moduleReady = [];
-        // for(var i=0;i<allModule.length;i++){
-        //     if(allModule[i] !== "main"){
-        //         var module = ModuleManager.getInstance().getModule(allModule[i]);
-        //         moduleReady.push(module);
-        //     }
-        // }
-        this.moduleReady = moduleReady;
-        this.moduleIndex = 0;
-    },
-
-    _loadReadyModule : function () {
-        if(this.moduleIndex >= this.moduleReady.length){
-            window._cc_finished_Loading();
-        }
-        else{
-            this.moduleIndex++;
-            this.moduleReady[this.moduleIndex-1].loadModule();
-        }
-    },
-
-    // updateLoadResources : function (current, target) {
-    //     cc.log("updateLoadResources: "+current +"/"+target);
-    // },
-    // updateLoadTexture : function (current, target) {
-    //     cc.log("updateLoadTexture: "+current +"/"+target);
-    // },
-    // onUpdateStatus : function (status) {
-    //     cc.log("onUpdateStatus: "+status);
-    //     if(status == LaucherStatus.OnLoadFinished){
-    //         this.nextScene();
-    //     }
-    // }
+    __setStatus : function (status) {
+        this.title.setString(status);
+    }
 });

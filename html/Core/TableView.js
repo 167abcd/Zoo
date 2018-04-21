@@ -412,7 +412,7 @@ newui.TableView = newui.CustomScrollView.extend({
     size : function () {
         return this._allItems.length;
     },
-
+    
     removeAllItems : function () {
         this.removeAllChildrenWithCleanup(true);
         this._refreshView = true;

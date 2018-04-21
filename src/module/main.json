@@ -1,0 +1,106 @@
+{
+	"script" : [
+		"js/Core/ViewHotfix.js",
+		"js/Core/NewAction.js",
+		"js/Core/ToggleNodeGroup.js",
+		"js/Core/ButtonToggle.js",
+		"js/Core/WebSprite.js",
+		"js/Core/WidgetButton.js",
+		"js/Global/Global.js",
+		"js/Global/TextureDownloader.js",
+		"js/Global/UserAvatar.js",
+		"js/Global/SoundPlayer.js",
+		"js/Global/ImageBase64.js",
+		"js/Data/VipData.js",
+		"js/Home/ImageCaptcha.js",
+
+		"js/Dialog/Dialog.js",
+		"js/Dialog/ToastMessage.js",
+		"js/Dialog/DialogLoading.js",
+	  	"js/Dialog/DialogMessage.js",
+
+
+		"js/FloatButton/FloatButton.js",
+		"js/FloatButton/FloatButtonAnimation.js",
+		"js/FloatButton/FloatButtonComponent.js",
+		"js/FloatButton/MiniTaiXiuNotification.js",
+
+		"js/IScene.js",
+		"js/SceneNavigator.js",
+		"js/ModuleIcon.js",
+		"js/Socket/HttpClient.js",
+		"js/Socket/SocketClient.js",
+
+		"js/Home/GiftCodeLayer.js",
+		"js/Home/LobbyBottomBar.js",
+		"js/Home/LobbyTopBar.js",
+		"js/Home/LobbyLayer.js",
+		"js/Home/HomeScene.js",
+		"js/Home/LoginLayer.js",
+		"js/Home/SignupLayer.js",
+		"js/Home/TopBarTouchLayer.js",
+		"js/Home/HomeGameLayer.js",
+		"js/Home/HomeMenuLayer.js",
+		"js/Home/WebBottomBar.js"
+
+	],
+	"texture" : [
+	  	{"img": "res/Texture/Home/web.jpg"},
+
+		{
+			"img": "res/Texture/Home/zoo.png",
+			"plist": "res/Texture/Home/zoo.plist"
+		}
+
+	],
+	"fonts" : [
+	  	{
+		  	"img": "res/fonts/Tahoma_Regular_24.png",
+		  	"fnt": "res/fonts/Tahoma_Regular_24.fnt"
+	  	},
+		{
+			"img": "res/fonts/TXFont/Taixiu_font_export.png",
+			"fnt": "res/fonts/TXFont/Taixiu_font_export.fnt"
+		},
+	  	{
+			"img": "res/fonts/TXFont/Taixiu_font_export2x.png",
+			"fnt": "res/fonts/TXFont/Taixiu_font_export2x.fnt"
+	  	},
+		{
+			"img": "res/fonts/TXFont/TX_silverFont_export.png",
+			"fnt": "res/fonts/TXFont/TX_silverFont_export.fnt"
+		},
+		{
+			"img": "res/fonts/TXFont/TX_silverFont_export2x.png",
+			"fnt": "res/fonts/TXFont/TX_silverFont_export2x.fnt"
+		}
+
+	],
+	"sound" : [
+		"res/Sound/xiu.mp3"
+	],
+	"spine" : {
+
+	},
+	"raw" : [
+	  "res/fonts/arial.ttf",
+	  "res/fonts/arialbd.ttf",
+	  "res/fonts/ENGR.ttf",
+	  "res/fonts/Pony_0.ttf",
+	  "res/fonts/Roboto-Black.ttf",
+	  "res/fonts/Roboto-Bold.ttf",
+	  "res/fonts/Roboto-Italic.ttf",
+	  "res/fonts/Roboto-Medium.ttf",
+	  "res/fonts/Roboto-Regular.ttf",
+	  "res/fonts/tahoma.ttf",
+	  "res/fonts/tahomabd.ttf",
+	  "res/fonts/UTM-Alexander.ttf",
+	  "res/fonts/UTM-Alter-Gothic.ttf",
+	  "res/fonts/UTM-Aurora.ttf",
+	  "res/fonts/UTM-Bebas.ttf",
+	  "res/fonts/UTM-Bitsumishi-Pro.ttf",
+	  "res/fonts/UTM-Cookies.ttf",
+	  "res/fonts/UTM-Mobifone-KT.ttf",
+	  "res/fonts/UTM-SeagullBold.ttf"
+	]
+}

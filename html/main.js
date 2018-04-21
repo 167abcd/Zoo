@@ -72,39 +72,32 @@ cc.game.onStart = function(){
     // Adjust viewport meta
     cc.view.adjustViewPort(true);
 
-    // Setup the resolution policy and design resolution size;
-   // cc.view.setFrameSize(cc.size(400,400));
-  //  cc.view.setRealPixelResolution(1280,720,cc.ResolutionPolicy.SHOW_ALL);
-    var frameSize = cc.view.getFrameSize();
-    var designHeight = 720.0;
-    var designWidth = 1280.0;//frameSize.width * designHeight / frameSize.height;
-    if (designWidth < 960.0) {
-        designWidth = 960.0;
-    }
-    if (designWidth > 1280.0) {
-        designWidth = 1280.0;
-    }
+    var designHeight = 1080;//720.0;
+    var designWidth = 1920;//2000.0;//frameSize.width * designHeight / frameSize.height;
+
 
     // Setup the resolution policy and design resolution size
-    var policy = new cc.ResolutionPolicy(cc.ContainerStrategy.PROPORTION_TO_FRAME, cc.ContentStrategy.SHOW_ALL);
+    var policy = new cc.ResolutionPolicy(cc.ContainerStrategy.EQUAL_TO_FRAME, cc.ContentStrategy.FIXED_WIDTH);
     cc.view.setDesignResolutionSize(designWidth, designHeight, policy);
 
-    cc.winSize.screenScale = designWidth / 1280.0;
-    // Instead of set design resolution, you can also set the real pixel resolution size
-    // Uncomment the following line and delete the previous line.
-    // cc.view.setRealPixelResolution(960, 640, cc.ResolutionPolicy.SHOW_ALL);
-    // The game will be resized when browser size change
+
     cc.view.resizeWithBrowserSize(true);
 
 
     //load resources
-    // cc.LoaderScene.preload(g_resources, function () {
-    //     cc.director.runScene(new HelloWorldScene());
-    // }, this);
     cc.hotfixFunction();
     if(window.cc_resources_search_path){
         cc.loader.resPath = window.cc_resources_search_path;
     }
-    cc.director.runScene(new LoadingScene());
+    var g_resources = [
+        "res/Texture/LoadingScene/bgLoading.jpg",
+        "res/Texture/LoadingScene/slider.png"
+    ];
+    cc.loader.load(g_resources,
+        function (result, count, loadedCount) {
+        },
+        function () {
+            cc.director.runScene(new LoadingScene());
+        });
 };
 cc.game.run();

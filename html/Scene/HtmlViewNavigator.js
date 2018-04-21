@@ -8,14 +8,14 @@ var ViewNavigator = cc.Class.extend({
     },
 
     _initListener : function () {
-        LobbyClient.getInstance().addListener("login", this._onLoginFinished, this);
-      //  LobbyClient.getInstance().addListener("error", this._onError, this);
-       // LobbyClient.getInstance().addListener("LobbyStatus", this._onLobbyStatusHandler, this);
-       // LobbyClient.getInstance().addListener("kicked", this._onKicked, this);
+        SocketClient.getInstance().addListener("login", this._onLoginFinished, this);
+      //  SocketClient.getInstance().addListener("error", this._onError, this);
+       // SocketClient.getInstance().addListener("LobbyStatus", this._onLobbyStatusHandler, this);
+       // SocketClient.getInstance().addListener("kicked", this._onKicked, this);
     },
 
     _removeListener : function (cmd, event) {
-        LobbyClient.getInstance().removeListener(this);
+        SocketClient.getInstance().removeListener(this);
         //cc.log("_removeListener 111");
     },
 
@@ -55,7 +55,7 @@ var ViewNavigator = cc.Class.extend({
         var accessToken = cc.Global.GetSetting("accessToken","");
         if(accessToken !== ""){
             LoadingDialog.getInstance().show("Đang đăng nhập");
-            LobbyClient.getInstance().tokenLogin(accessToken);
+            SocketClient.getInstance().tokenLogin(accessToken);
         }
         else{
             SceneNavigator.showLoginNormal();
@@ -67,7 +67,7 @@ var ViewNavigator = cc.Class.extend({
         //     var password = cc.Global.getSavePassword();
         //     if(username != "" && password != ""){
         //         LoadingDialog.getInstance().show("Đang đăng nhập");
-        //         LobbyClient.getInstance().loginNormal(username, password, true);
+        //         SocketClient.getInstance().loginNormal(username, password, true);
         //     }
         //     else{
         //         SceneNavigator.showLoginNormal();

@@ -9,7 +9,7 @@ var FacebookPlugin = (function() {
             if (instance) {
                 throw "Cannot create new instance for Singleton Class";
             } else {
-                this.fbAppId = "129534197699975";
+                this.fbAppId = "1296504797116621";
                 this.lazyInit();
             }
         },

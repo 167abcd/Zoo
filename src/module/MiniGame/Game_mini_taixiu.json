@@ -1,0 +1,47 @@
+{
+	"module" : [
+		"GameMini"
+	],
+	"script" : [
+		"js/MiniGame/LichSuTaiXiuLayer.js",
+		"js/MiniGame/ChiTietPhienLayer.js",
+		"js/MiniGame/BXHMiniTaixiuLayer.js",
+		"js/MiniGame/ChanLeController.js",
+		"js/MiniGame/ChanLeLayer.js"
+
+	],
+	"texture" : [
+		{
+			"img": "res/Texture/MiniTaiXiu/minitaixiu.png",
+			"plist": "res/Texture/MiniTaiXiu/minitaixiu.plist"
+		},
+		{
+			"img": "res/Texture/MiniTaiXiu/xuc_xac_effect.png",
+			"plist": "res/Texture/MiniTaiXiu/xuc_xac_effect.plist"
+		},
+		{"img": "res/Texture/huongdansukienduday.png"}
+	],
+	"fonts" : [
+		{
+			"img": "res/fonts/Untitled-1-export.png",
+			"fnt": "res/fonts/Untitled-1-export.fnt"
+		},
+		{
+			"img": "res/Texture/MiniTaiXiu/tx_fnt_nguoi.png",
+			"fnt": "res/Texture/MiniTaiXiu/tx_fnt_nguoi.fnt"
+		},
+		{
+			"img": "res/Texture/MiniTaiXiu/tx_fnt_tien.png",
+			"fnt": "res/Texture/MiniTaiXiu/tx_fnt_tien.fnt"
+		}
+	],
+	"sound" : [
+
+	],
+	"spine" : {
+
+	},
+	"raw" : [
+
+	]
+}

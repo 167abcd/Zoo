@@ -103,10 +103,10 @@ cc.hotfixFunction = function () {
     }, false);
 
     //yes
-    // window.onbeforeunload = function () {
-    //     SmartfoxClient.getInstance().close();
-    //     LobbyClient.getInstance().close();
-    // };
+    window.onbeforeunload = function () {
+        SmartfoxClient.getInstance().close();
+        SocketClient.getInstance().close();
+    };
 };
 
 (function () {

@@ -6,10 +6,11 @@
     "frameRate" : 60,
     "noCache" : false,
     "id" : "gameCanvas",
-    "renderMode" : 2,
+    "renderMode" : 0,
     "engineDir":"frameworks/cocos2d-html5",
 
-    "modules" : ["cocos2d", "extensions"],
+    "modules" : ["cocos2d", "extensions",  "chipmunk"
+    ],
 
     "jsList" : [
         "html/Core/HackTimer.js",
@@ -30,6 +31,7 @@
         "html/Core/ImageBitmap.js",
         "html/Core/NewRichText.js",
         "html/Core/ResourceLoader.js",
+        "html/Socket/socket.io.js",
         "html/Socket/LobbySocket.js",
         "html/Socket/SFSSocket.js",
         "html/GameLaucher/GameModule.js",

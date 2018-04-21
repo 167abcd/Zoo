@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Cocos2d-html5 Hello World test</title>
+    <title>Bin Club</title>
     <link rel="icon" type="image/GIF" href="res/favicon.ico"/>
 
     <meta name="viewport"
@@ -60,7 +60,6 @@ body {
 
   cursor: default;
   color: #888;
-  background-color: #333;
 
   text-align: center;
   font-family: Helvetica, Verdana, Arial, sans-serif;
@@ -88,10 +87,13 @@ canvas {
 </style>
 </head>
 <body style="overflow: hidden;">
-<script src="loading.js"></script>
 <canvas id="gameCanvas" width="480" height="720"></canvas>
 <script>
     (function () {
+        window._multiHost = [
+            "https://static1.bin.club",
+            "https://static2.bin.club"
+        ];
         var nav = window.navigator;
         var ua = nav.userAgent.toLowerCase();
         var uaResult = /android (\d+(?:\.\d+)+)/i.exec(ua) || /android (\d+(?:\.\d+)+)/i.exec(nav.platform);

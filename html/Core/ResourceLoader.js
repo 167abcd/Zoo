@@ -188,9 +188,20 @@ ResourceLoader.OnLoadFinished = 4;
 
 (function () {
     if(window._multiHost){
-        var _urlRegExp = new RegExp("^(?:https?|ftp)://\\S*$", "i");
-
         var multiHost = window._multiHost;
+        window._maxDownloadResConnection = multiHost * 5;
+
+        for(var i=0;i<multiHost.length;i++){
+            var host = multiHost[i];
+            if(host !== ""){
+                if(host.endsWith("/")){
+                    host = host.substr(0, host.length-1);
+                }
+                multiHost[i] = host + window.location.pathname;
+            }
+        }
+
+        var _urlRegExp = new RegExp("^(?:https?|ftp)://\\S*$", "i");
         for(var i=0;i<multiHost.length;i++){
             if(multiHost[i] !== "" && !multiHost[i].endsWith("/")){
                 multiHost[i] += "/";
@@ -201,11 +212,13 @@ ResourceLoader.OnLoadFinished = 4;
         for (var key in allRegister) {
             if (!allRegister.hasOwnProperty(key)) continue;
             (function () {
-                var _loader = allRegister[key];
-                var _loadFunc = _loader.load;
-                _loader.load = function (realUrl, url, item, cb) {
+                var _oldLoader = allRegister[key];
+                var _newLoader = {};
+                allRegister[key] = _newLoader;
+                _newLoader.load = function (realUrl, url, item, cb) {
                     if(_urlRegExp.test(realUrl)){
-                        _loadFunc.apply(_loader,  [realUrl, url, item, cb]);
+                       // console.log("load real url: " + realUrl);
+                        _oldLoader.load(realUrl, url, item, cb);
                     }
                     else{
                         if(hostIdx >= multiHost.length){
@@ -213,14 +226,16 @@ ResourceLoader.OnLoadFinished = 4;
                         }
                         var newRealUrl = multiHost[hostIdx] + realUrl;
                         hostIdx++;
-
-                        _loadFunc.apply(_loader,  [newRealUrl, url, item, function (err, data) {
-                            if(err){
-                                _loadFunc.apply(_loader,  [realUrl, url, item, cb]);
-                                return;
-                            }
+                        //console.log("load newRealUrl: " + newRealUrl);
+                        _oldLoader.load(newRealUrl, url, item, function (err, data) {
                             cb(err, data);
-                        }]);
+                            // if(err){
+                            //     _oldLoader.load(realUrl, url, item, cb);
+                            // }
+                            // else{
+                            //     cb(err, data);
+                            // }
+                        });
                     }
                 };
             })();
@@ -232,7 +247,7 @@ ResourceLoader.OnLoadFinished = 4;
     var _request = {};
     var _cache = {};
     if(window._maxDownloadResConnection === undefined){
-        window._maxDownloadResConnection = 10;
+        window._maxDownloadResConnection = 6;
     }
 
     var maxConnect = window._maxDownloadResConnection;

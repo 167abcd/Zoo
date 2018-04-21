@@ -1,5 +1,5 @@
 {
 	"module" : {
-		"main" : "mainModule.json"
+		"main" : "module/main.json"
 	}
 }
