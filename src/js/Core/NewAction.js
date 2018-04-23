@@ -3,8 +3,9 @@
  */
 
 //Point()|cc.p()|
-var ext = ext || {};
-ext.ActionShake2D = cc.CustomAction.extend({
+//var ext = ext || {};
+var cc = cc || {};
+cc.ActionShake2D = cc.CustomAction.extend({
     ctor : function (duration, strength) {
         this._super();
         this.initWithDuration(duration);
@@ -37,7 +38,7 @@ ext.ActionShake2D = cc.CustomAction.extend({
     }
 });
 
-ext.ActionNumber = cc.CustomAction.extend({
+cc.ActionNumber = cc.CustomAction.extend({
     ctor : function (duration, targetNumber) {
         this._super();
         this._startNumber = 0;
@@ -66,7 +67,7 @@ ext.ActionNumber = cc.CustomAction.extend({
     }
 });
 
-ext.ActionNumber2 = ext.ActionNumber.extend({
+cc.ActionNumber2 = cc.ActionNumber.extend({
     ctor : function (duration, targetNumber) {
         this._super(duration, targetNumber);
     },
@@ -76,7 +77,7 @@ ext.ActionNumber2 = ext.ActionNumber.extend({
     }
 });
 
-ext.ActionTimeRemaining = cc.CustomAction.extend({
+cc.ActionTimeRemaining = cc.CustomAction.extend({
     ctor : function (duration) {
         this._super();
         this._fromNumber = duration;
@@ -99,7 +100,7 @@ ext.ActionTimeRemaining = cc.CustomAction.extend({
     }
 });
 
-ext.ActionTimer = cc.CustomAction.extend({
+cc.ActionTimer = cc.CustomAction.extend({
     ctor : function (duration, callback) {
         this._super();
         this.callback = callback;

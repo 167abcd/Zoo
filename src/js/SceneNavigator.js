@@ -169,24 +169,13 @@ SceneNavigator.startGame = function (gameId, arg1) {
     }
 
     //create game scene
-    if(gameId  > 100 ){
-        MiniGameNavigator.showGame.apply(this, arguments);
-    }
-    else if(gameId === GameType.GAME_AOE){
-        SceneNavigator.replaceScene(new DeCheScene());
-        // SceneNavigator.replaceScene(new AoeGiftCode(1,true));
+    if(gameId === GameType.GAME_SLOT_FRUIT){
+        SceneNavigator.replaceScene(new SlotFruitScene());
     }
     else if(gameId === GameType.GAME_TET_AM){
         SceneNavigator.replaceScene(new TetAmLobbyScene());
-    }
-    else if(gameId === GameType.GAME_Larva){
-        SceneNavigator.replaceScene(new LarvaScene());
-    }
-    else if(gameId === GameType.GAME_XocDia){
-        SceneNavigator.replaceScene(new XocDiaScene());
-    }
-    else if(gameId === GameType.GAME_TaiXiu){
-        SceneNavigator.replaceScene(new TaiXiuScene());
+    }else {
+        MiniGameNavigator.showGame.apply(this, arguments);
     }
 };
 

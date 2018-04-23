@@ -60,23 +60,24 @@ var HomeScene = IScene.extend({
     ctor : function () {
         this._super();
         cc.log("test home");
-        this.sceneLayer.setContentSize(cc.size(2000, 860));
+        //this.sceneLayer.setContentSize(cc.size(2000, 860));
 
         var thiz = this;
 
-        var bg = new cc.Sprite("res/Texture/game_bg.jpg");
+        var bg = new cc.Sprite("res/Texture/Home/web.jpg");
         bg.setAnchorPoint(cc.p(0,1));
+        bg.setPosition(0, cc.winSize.height);
         this.addChild(bg,-1);
         this.bg = bg;
 
-        this.addChild(new WebBottomBar(), -1);
 
-       // this.sceneLayer.addChild(new HomeLogo());
-        var lobbyLayer = new cc.Node();
+
+
+       /* var lobbyLayer = new cc.Node();
         var homeLobbyLayer = new HomeLobbyLayer();
-        var homeChatLayer = new HomeChatLayer();
+        //var homeChatLayer = new HomeChatLayer();
         lobbyLayer.addChild(homeLobbyLayer);
-        lobbyLayer.addChild(homeChatLayer);
+        //lobbyLayer.addChild(homeChatLayer);
         this.sceneLayer.addChild(lobbyLayer);
         lobbyLayer.startWithGameId = function (gameId) {
             homeLobbyLayer.startWithGame(gameId);
@@ -85,13 +86,13 @@ var HomeScene = IScene.extend({
         lobbyLayer.setVisible = function (visible) {
             _func.apply(lobbyLayer, [visible]);
             homeLobbyLayer.setVisible(visible);
-            homeChatLayer.setVisible(visible);
+            //homeChatLayer.setVisible(visible);
         };
 
         lobbyLayer.unSubscribe = function () {
             homeLobbyLayer.unSubscribe();
         };
-        this.lobbyLayer = lobbyLayer;
+        this.lobbyLayer = lobbyLayer;*/
 
         var gameLayer = new HomeGameLayer();
         this.sceneLayer.addChild(gameLayer);
@@ -100,16 +101,8 @@ var HomeScene = IScene.extend({
             thiz.onTouchGame(gameId);
         };
 
-        // var homeBanner = new HomeTopAdBanner();
-        // homeBanner.setPosition(997, 648);
-        // gameLayer.addChild(homeBanner,-1);
-
-        // var homeGameGroupLayer = new HomeGameGroupLayer();
-        // homeGameGroupLayer.setVisible(false);
-        // this.sceneLayer.addChild(homeGameGroupLayer,10);
-        // gameLayer.onTouchGameGroup = function (gameId, view) {
-        //     homeGameGroupLayer.showWithView(view, gameId);
-        // };
+        return;
+        this.addChild(new WebBottomBar(), -1);
 
         var topBarLayer = new HomeTopBarLayer();
         topBarLayer.loginLayer.btn_back.setVisible(false);
@@ -136,7 +129,7 @@ var HomeScene = IScene.extend({
         }
         this.bg.setScale(scaleY);
         this.bg.setPosition(0, cc.winSize.height);
-        this.bottomBar.setPosition(this.bottomBar.width/2,  cc.winSize.height - 475);
+        //this.bottomBar.setPosition(this.bottomBar.width/2,  cc.winSize.height - 475);
     },
 
     _onKeyBackHandler : function () {

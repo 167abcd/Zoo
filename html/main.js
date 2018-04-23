@@ -90,8 +90,8 @@ cc.game.onStart = function(){
         cc.loader.resPath = window.cc_resources_search_path;
     }
     var g_resources = [
-        "res/Texture/LoadingScene/bgLoading.jpg",
-        "res/Texture/LoadingScene/slider.png"
+        //"res/Texture/LoadingScene/bgLoading.jpg",
+        //"res/Texture/LoadingScene/slider.png"
     ];
     cc.loader.load(g_resources,
         function (result, count, loadedCount) {

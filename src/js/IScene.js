@@ -10,7 +10,7 @@ var MainScene = cc.Scene.extend({
         this.bottomScene = new cc.Node();
         this.addChild(this.bottomScene, 0);
 
-        this.addChild(new JackpotFloatButton(), 2);
+        //this.addChild(new JackpotFloatButton(), 2);
 
         this.addChild(new FloatButton(), 2);
 
@@ -70,8 +70,8 @@ var IScene = cc.Node.extend({
         this.floatButtonLayer = new cc.Node();
         this.addChild(this.floatButtonLayer, 2);
 
-        this.sceneLayer.setContentSize(cc.size(2000, 1000));
-
+        //this.sceneLayer.setContentSize(cc.size(2000, 1000));
+        this.sceneLayer.setContentSize(cc.size(1920, 1080));
         SceneNavigator.resizeEvent(this);
     },
 

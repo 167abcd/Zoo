@@ -11,7 +11,8 @@
 		"js/Global/UserAvatar.js",
 		"js/Global/SoundPlayer.js",
 		"js/Global/ImageBase64.js",
-		"js/Data/VipData.js",
+	  	"js/Global/Cmd.js",
+		"js/Data/PlayerMeData.js",
 		"js/Home/ImageCaptcha.js",
 
 		"js/Dialog/Dialog.js",
@@ -46,7 +47,8 @@
 	],
 	"texture" : [
 	  	{"img": "res/Texture/Home/web.jpg"},
-
+	    {"img": "res/Texture/Home/lobby_gameIcon_download_0.png"},
+	    {"img": "res/Texture/Home/lobby_gameIcon_download_1.png"},
 		{
 			"img": "res/Texture/Home/zoo.png",
 			"plist": "res/Texture/Home/zoo.plist"

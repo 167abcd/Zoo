@@ -1,17 +1,17 @@
 var s_home_gameList = s_home_gameList || [
-    GameType.GAME_TET_AM,
-    GameType.MiniGame_CuopBien_Slot,
-    GameType.GAME_Larva,
-    GameType.GAME_AOE,
-    GameType.MiniGame_Candy_Slot,
-    GameType.GAME_XocDia,
-    GameType.MiniGame_TaiXiu,
-    GameType.MiniGame_Poker,
-    GameType.MiniGame_CaoThap
+    GameType.GAME_SLOT_FRUIT,
+    //GameType.MiniGame_CuopBien_Slot,
+    //GameType.GAME_Larva,
+    //GameType.GAME_AOE,
+    //GameType.MiniGame_Candy_Slot,
+    //GameType.GAME_XocDia,
+    //GameType.MiniGame_TaiXiu,
+    //GameType.MiniGame_Poker,
+    //GameType.MiniGame_CaoThap
 ];
 
-var s_home_game_icon_size_small = cc.size(247, 163);
-var s_home_game_icon_size_large = cc.size(205, 341);
+var s_home_game_icon_size_small = cc.size(225, 231);
+var s_home_game_icon_size_large = cc.size(237, 437);
 var s_home_game_icon_size = {};
 s_home_game_icon_size[GameType.GAME_TienLenMN] = s_home_game_icon_size_small;
 s_home_game_icon_size[GameType.GAME_TLMN_Solo] = s_home_game_icon_size_small;
@@ -24,6 +24,7 @@ s_home_game_icon_size[GameType.MiniGame_TaiXiu] = s_home_game_icon_size_small;
 s_home_game_icon_size[GameType.GAME_XocDia] = s_home_game_icon_size_small;
 s_home_game_icon_size[GameType.GAME_TaiXiu] = s_home_game_icon_size_small;
 
+s_home_game_icon_size[GameType.GAME_SLOT_FRUIT] = s_home_game_icon_size_large;
 s_home_game_icon_size[GameType.GAME_Larva] = s_home_game_icon_size_large;
 s_home_game_icon_size[GameType.GAME_AOE] = s_home_game_icon_size_large;
 s_home_game_icon_size[GameType.GAME_TET_AM] = s_home_game_icon_size_large;
@@ -189,17 +190,17 @@ var home_jackpot_gameId = home_jackpot_gameId || {};
 var HomeGameLayer = cc.Node.extend({
     ctor : function () {
         this._super();
-        var broadcast = new HomeBroadcastMessage();
-        this.addChild(broadcast);
+        //var broadcast = new HomeBroadcastMessage();
+        //this.addChild(broadcast);
 
         this._initView();
     },
 
     _initView: function () {
         var left = 277;
-        var bottom = 93;
-        var right = 1647;
-        var top = 640;
+        var bottom = cc.winSize.height/2  - 320;
+        var right = 1920-277;
+        var top = bottom +640;
 
         var listGame = new newui.TableView(cc.size(right - left, (top - bottom)), 1);
         listGame.setDirection(ccui.ScrollView.DIR_HORIZONTAL);
@@ -252,7 +253,8 @@ var LobbyGameCardButton = ccui.Widget.extend({
     ctor : function (gameId, iconSize) {
         this._super();
         this.setTouchEnabled(true);
-        var gameIcon = new cc.Sprite("#lobby_gameIcon_"+ gameId +".png");
+        //var gameIcon = new cc.Sprite("#ListGame/"+ gameId +".png");
+        var gameIcon = new cc.Sprite("#ListGame/slot1.png");
         this.moduleName = GameModuleName[gameId];
         if(iconSize){
             this.setContentSize(iconSize);
@@ -272,17 +274,17 @@ var LobbyGameCardButton = ccui.Widget.extend({
         this.addChild(downloadLayer,1);
         this.downloadLayer = downloadLayer;
 
-        var downloadBar = new cc.ProgressTimer(new cc.Sprite("#lobby_gameIcon_download_1.png"));
+        var downloadBar = new cc.ProgressTimer(new cc.Sprite("res/Texture/Home/lobby_gameIcon_download_1.png"));
         downloadBar.setType(cc.ProgressTimer.TYPE_RADIAL);
         downloadBar.setPosition(downloadLayer.width/2, downloadLayer.height/2);
         downloadLayer.addChild(downloadBar,1);
         this.downloadBar = downloadBar;
 
-        var downloadBarBg = new cc.Sprite("#lobby_gameIcon_download_0.png");
+        var downloadBarBg = new cc.Sprite("res/Texture/Home/lobby_gameIcon_download_0.png");
         downloadBarBg.setPosition(downloadBar.getPosition());
         downloadLayer.addChild(downloadBarBg,0);
 
-        var downloadLabel = cc.Label.createWithBMFont(cc.res.font.Roboto_UTMAvoBold_16, "123");
+        var downloadLabel = cc.Label.createWithBMFont(cc.res.font.Tahoma_Regular_24, "123");
         downloadLabel.setPosition(downloadBar.getPosition());
         downloadLayer.addChild(downloadLabel,2);
         this.downloadLabel = downloadLabel;
@@ -292,7 +294,7 @@ var LobbyGameCardButton = ccui.Widget.extend({
         if(s_game_available.indexOf(gameId) === -1){
             gameIcon.setEnabled(false);
             this.addClickEventListener(function () {
-                MessageNode.getInstance().show("Game sắp ra mắt.");
+                ToastMessage.getInstance().show("Game sắp ra mắt.");
             });
         }
         else{
@@ -302,10 +304,10 @@ var LobbyGameCardButton = ccui.Widget.extend({
             });
         }
 
-        var animation = window._createHomeIconAnimation(gameId, iconSize);
+        /*var animation = window._createHomeIconAnimation(gameId, iconSize);
         if(animation){
             gameIcon.addChild(animation);
-        }
+        }*/
     },
 
     _onPressStateChangedToPressed: function () {
@@ -330,7 +332,7 @@ var LobbyGameCardButton = ccui.Widget.extend({
 var LobbyGameSlotButton = LobbyGameCardButton.extend({
     ctor: function (gameId) {
         this._super(gameId, cc.size(223, 349));
-        this._initGameIconJackpot(gameId);
+       // this._initGameIconJackpot(gameId);
     },
 
     _initGameIconJackpot : function (gameId) {

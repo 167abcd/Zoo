@@ -1,5 +1,6 @@
 {
 	"module" : {
-		"main" : "module/main.json"
+		"main" : "module/main.json",
+	  	"GameSlotFruit" : "module/GameSlot/GameSlotFruit.json"
 	}
 }

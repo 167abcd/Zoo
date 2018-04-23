@@ -1,0 +1,40 @@
+{
+	"script" : [
+	  "js/Core/ButtonToggle.js",
+	  "js/Core/ToggleNodeGroup.js",
+	  "js/Game/Controller/GameController.js",
+	  "js/Game/Controller/SlotFruitController.js",
+	  "js/Slot/SlotUi.js",
+	  "js/Game/SlotLayer.js",
+	  "js/Game/SlotFruitScene.js"
+	],
+	"texture" : [
+		{
+			"img":   "res/Texture/SlotFruit/zoo_fruit.png",
+			"plist": "res/Texture/SlotFruit/zoo_fruit.plist"
+		},
+	  	{
+		  "img":   "res/Texture/SlotFruit/zoo_fruit_highlight.png",
+		  "plist": "res/Texture/SlotFruit/zoo_fruit_highlight.plist"
+	  	},
+		{"img": "res/Texture/SlotFruit/fruit_bg.png"},
+		{"img": "res/Texture/SlotFruit/fruit_bg_bot.png"},
+		{"img": "res/Texture/SlotFruit/fruit_bangthuong.png"},
+	    {"img": "res/Texture/SlotFruit/dialog_chondong_number_line.png"}
+
+
+
+	],
+	"fonts" : [
+
+	],
+	"sound" : [
+
+	],
+	"spine" : {
+
+	},
+	"raw" : [
+
+	]
+}

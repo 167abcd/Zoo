@@ -104,7 +104,6 @@ cc.hotfixFunction = function () {
 
     //yes
     window.onbeforeunload = function () {
-        SmartfoxClient.getInstance().close();
         SocketClient.getInstance().close();
     };
 };

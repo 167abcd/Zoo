@@ -2,7 +2,7 @@
  * Created by ext on 7/6/2016.
  */
 
-
+var MyTest = MyTest || {};
 
 String.prototype.insertAt = function(index, string) {
     return this.substr(0, index) + string + this.substr(index);
@@ -97,6 +97,7 @@ if(cc.sys.isNative){
     cc.res.font.UTM_SeagullBold = "res/fonts/UTM_SeagullBold.ttf";
     cc.res.font.Roboto_Regular = "res/fonts/Roboto-Regular.ttf";
     cc.res.font.Roboto_Black = "res/fonts/Roboto-Black.ttf";
+    cc.res.font.Tahoma = "res/fonts/tahoma.ttf";
 }
 else{
     cc.res.font.Roboto_Condensed = "Roboto-Condensed";
@@ -105,12 +106,14 @@ else{
     cc.res.font.UTM_SeagullBold = "UTM_SeagullBold";
     cc.res.font.Roboto_Regular = "Roboto-Regular";
     cc.res.font.Roboto_Black = "Roboto-Black.ttf";
+    cc.res.font.Tahoma = "tahoma.ttf";
 }
 
 cc.res.font.Tahoma_Regular_24 = "res/fonts/Tahoma_Regular_24.fnt";
 
 var GameType = GameType || {};
-GameType.GAME_AOE = 1;
+GameType.GAME_SLOT_FRUIT = 1;
+GameType.GAME_AOE = 1111;
 GameType.GAME_game_of_thrones = 2;
 GameType.GAME_Larva = 3;
 GameType.GAME_MauBinh = 4;
@@ -125,7 +128,7 @@ GameType.GAME_Sam_Solo = 12;
 GameType.GAME_Lieng = 13;
 GameType.GAME_BaCayChuong = 14;
 GameType.GAME_Poker = 15;
-GameType.GAME_SLOT_FRUIT = 16;
+
 GameType.GAME_TET_AM = 17;
 
 GameType.GAME_MauBinh_Free = 201;
@@ -155,17 +158,12 @@ GameType.Group_TLML = 1001;
 GameType.Group_SAM = 1002;
 
 GameType.GameNoChannel = [
-    GameType.GAME_AOE,
-    GameType.GAME_game_of_thrones,
-    GameType.GAME_Larva,
-    GameType.GAME_TET_AM,
-    GameType.GAME_SLOT_FRUIT,
-    GameType.GAME_XocDia,
-    GameType.GAME_TaiXiu,
-    GameType.MiniGame_CuopBien_Slot
+    GameType.GAME_SLOT_FRUIT
+
 ];
 
 var GameModuleName = GameModuleName || {};
+GameModuleName[GameType.GAME_SLOT_FRUIT] = "GameSlotFruit";
 GameModuleName[GameType.GAME_TET_AM] = "GameTetAm";
 GameModuleName[GameType.GAME_AOE] = "GameAOE";
 GameModuleName[GameType.GAME_Larva] = "GameLarva";
@@ -203,6 +201,7 @@ s_GameId["ThreeCards"] = GameType.GAME_BaCay;
 var s_gameName = s_gameName || _map_swap_key_value(s_GameId);
 
 var s_game_available = s_game_available || [
+    GameType.GAME_SLOT_FRUIT,
     GameType.GAME_AOE,
     GameType.GAME_TET_AM,
   //  GameType.GAME_game_of_thrones,
@@ -234,6 +233,7 @@ var s_game_available = s_game_available || [
 ];
 
 var s_game_no_login = s_game_no_login || [
+    GameType.GAME_SLOT_FRUIT,
     GameType.GAME_AOE,
     GameType.GAME_game_of_thrones,
     GameType.GAME_Larva,
@@ -249,23 +249,7 @@ var s_game_no_login = s_game_no_login || [
     GameType.GAME_TaiXiu
 ];
 
-var PlayerMe = PlayerMe || {};
-PlayerMe.username = "";
-PlayerMe.isLogin2 = false;
-PlayerMe.password = "1234567";
-PlayerMe.phoneNumber = "0123456789";
-PlayerMe.gameType = "";
-PlayerMe.gold = 0;
-PlayerMe.goldFree = 0;
-PlayerMe.exp = 0;
-PlayerMe.goldBank = 0;
-PlayerMe.vipExp = 0;
-PlayerMe.avatar = "";
-PlayerMe.spin = 0;
-PlayerMe.messageCount = 0;
-PlayerMe.missionCount = 0;
-PlayerMe.xacthucContent = "";
-PlayerMe.SFS = PlayerMe.SFS || {};
+
 
 var GameConfig = GameConfig || {};
 GameConfig.email = "hotro.binclub@gmail.com";
@@ -278,21 +262,7 @@ GameConfig.telegram = "https://t.me/hotrobinclub";
 var GameInfo = GameInfo || {};
 GameInfo.Jackpot = {};
 
-cc.Global.clearPlayerMeData = function () {
-    PlayerMe.username = "";
-    PlayerMe.password = "";
-    PlayerMe.phoneNumber = "";
-    PlayerMe.gameType = "";
-    PlayerMe.gold = 0;
-    PlayerMe.exp = 0;
-    PlayerMe.goldBank = 0;
-    PlayerMe.vipExp = 0;
-    PlayerMe.avatar = "";
-    PlayerMe.spin = 0;
-    PlayerMe.messageCount = 0;
-    PlayerMe.missionCount = 0;
-    PlayerMe.xacthucContent = "";
-};
+
 
 cc.Global.GetSetting = function (setting, defaultValue) {
     var value = cc.sys.localStorage.getItem(setting);
@@ -367,6 +337,9 @@ cc.Global.IsNumber = function (str) {
     var re = new RegExp("^[0-9]+$");
     return re.test(numberText);
 };
+cc.Global.isUndefined = function (obj) {
+    return typeof obj === 'undefined';
+};
 
 if(cc.sys.isNative){
     ccui.Slider.prototype._ctor = function (barTextureName, normalBallTextureName, resType) {
@@ -393,7 +366,7 @@ cc.Global.openURL = function (url) {
 (function () {
     ModuleManager.getInstance().getReadyModule = function () {
         var moduleReady = [
-            this.getModule("GameAOE"),
+            //this.getModule("GameAOE"),
             //this.getModule("GameTLMN"),
             //this.getModule("GameSam"),
             //this.getModule("GamePhom")
@@ -407,7 +380,7 @@ cc.Global.openURL = function (url) {
         var newFunc = function () {
             func(arguments);
             // cc.log("on clikedButton");
-            SoundPlayer.playSound("button_click");
+            //SoundPlayer.playSound("button_click");
         };
         uiButtonClickedHandler.apply(this, [newFunc]);
     };
